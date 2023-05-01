@@ -124,8 +124,12 @@
     <?php endif ?>
         <?php
         $date = date('d/m/Y');
-        $db = mysqli_connect('localhost', 'root', '');
-        mysqli_select_db($db,'registration'); 
+        $password = "Myf@mily621";
+        $dbname = "attendance";
+        $db = mysqli_init();
+        mysqli_ssl_set($db,NULL,NULL,"C:\Users\Yashvi\Downloads\DigiCertGlobalRootCA.crt.pem",NULL,NULL);
+        mysqli_real_connect($db, "yashvisql.mysql.database.azure.com", "yashvidhar", $password, $dbname, 3306, MYSQLI_CLIENT_SSL);
+        // mysqli_select_db($db,'registration'); 
         $sql = "SELECT name FROM student_database WHERE (username = '$username')";
         $retval = mysqli_query($db , $sql );
         if(! $retval )
@@ -157,9 +161,13 @@
                  
          
         <?php
+        $password = "Myf@mily621";
+        $dbname = "attendance";
         
-        $db = mysqli_connect('localhost', 'root', '');
-        mysqli_select_db($db,'registration'); 
+        
+        $db = mysqli_init();
+        mysqli_ssl_set($db,NULL,NULL,"C:\Users\Yashvi\Downloads\DigiCertGlobalRootCA.crt.pem",NULL,NULL);
+        mysqli_real_connect($db, "yashvisql.mysql.database.azure.com", "yashvidhar", $password, $dbname, 3306, MYSQLI_CLIENT_SSL);
        
         // Start date
 	//$date = '2009-12-06';

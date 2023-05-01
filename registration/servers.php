@@ -10,9 +10,15 @@ $course   = "";
 $section   = "";
 $errors = array(); 
  
+$pass = "Myf@mily621";
+$dbname = "attendance";
 
+
+$db = mysqli_init();
+mysqli_ssl_set($db,NULL,NULL,"C:\Users\Yashvi\Downloads\DigiCertGlobalRootCA.crt.pem",NULL,NULL);
+mysqli_real_connect($db, "yashvisql.mysql.database.azure.com", "yashvidhar", $pass, $dbname, 3306, MYSQLI_CLIENT_SSL);
 // connect to the database
-$db = mysqli_connect('localhost', 'root', '', 'registration');
+// $db = mysqli_connect('localhost', 'root', '', 'registration');
 
 // REGISTER USER
 if (isset($_POST['reg_user'])) {
@@ -60,23 +66,23 @@ if (isset($_POST['reg_user'])) {
 
   // Finally, register user if there are no errors in the form
   if (count($errors) == 0) {
-  	$password = md5($password_1);//encrypt the password before saving in the database
+  	// $password = md5($password_1);//encrypt the password before saving in the database
 
-        $add1 = "INSERT INTO `cbnst` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('cbnst', '$id', '$name', '', '');";
-        mysqli_query($db, $add1);
-        $add2 = "INSERT INTO `automata` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('automata', '$id', '$name', '', '');";
-        mysqli_query($db, $add2);
-        $add3 = "INSERT INTO `co` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('co', '$id', '$name', '', '');";
-        mysqli_query($db, $add3);
-        $add4 = "INSERT INTO `micro` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('micro', '$id', '$name', '', '');";
-        mysqli_query($db, $add4);
-        $add5 = "INSERT INTO `cc` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('cc', '$id', '$name', '', '');";
-        mysqli_query($db, $add5);
-        $add6 = "INSERT INTO `java` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('java', '$id', '$name', '', '');";
-        mysqli_query($db, $add6);
+        // $add1 = "INSERT INTO `cbnst` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('cbnst', '$id', '$name', '', '');";
+        // mysqli_query($db, $add1);
+        // $add2 = "INSERT INTO `automata` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('automata', '$id', '$name', '', '');";
+        // mysqli_query($db, $add2);
+        // $add3 = "INSERT INTO `co` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('co', '$id', '$name', '', '');";
+        // mysqli_query($db, $add3);
+        // $add4 = "INSERT INTO `micro` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('micro', '$id', '$name', '', '');";
+        // mysqli_query($db, $add4);
+        // $add5 = "INSERT INTO `cc` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('cc', '$id', '$name', '', '');";
+        // mysqli_query($db, $add5);
+        // $add6 = "INSERT INTO `java` (`subject`, `id`, `name`, `feedback`, `report`) VALUES ('java', '$id', '$name', '', '');";
+        // mysqli_query($db, $add6);
         
         
-  	$query = "INSERT INTO student_database (id, name, username, email, course, section, password) 
+  	$query = "INSERT INTO student_database (rollno, name, username, email, course, section, password) 
   			  VALUES('$id', '$name', '$username', '$email', '$course', '$section', '$password')";
   	mysqli_query($db, $query);
   	$_SESSION['username'] = $username;
@@ -98,7 +104,7 @@ if (isset($_POST['login_user'])) {
   }
 
   if (count($errors) == 0) {
-  	$password = md5($password);
+  	// $password = md5($password);
   	$query = "SELECT * FROM student_database WHERE username='$username' AND password='$password'";
   	$results = mysqli_query($db, $query);
   	if (mysqli_num_rows($results) == 1) {

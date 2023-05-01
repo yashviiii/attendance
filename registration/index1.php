@@ -1,3 +1,4 @@
+<?php include('server.php') ?>
 <?php 
   session_start(); 
 
@@ -125,106 +126,19 @@
     
         
     <?php endif ?>
-    <?php
-        
-        $date = date('d/m/Y');
-        $db = mysqli_connect('localhost', 'root', '');
-        mysqli_select_db($db,'registration'); 
-        $sql = "SELECT subject FROM teacher_database WHERE (username = '$username')";
-        $retval = mysqli_query($db , $sql );
-        if(! $retval )
-        {
-            die('Could not get data: ' . mysqli_error());
-         }
-         
-                        
-        while($row = mysqli_fetch_array($retval, MYSQLI_ASSOC)) {
-            $subject=$row['subject'];
-        echo "subject :{$row['subject']}  <br> " ;
-   }
-    ?>
-      <br/>
-      
-                    <table width='100%' border='0' cellpadding='0' cellspacing='1' class="data-table">
-                        
-                            <tr>
-                                <th   class='data-table'> Roll no</th>
-                                <th   class='data-table'>Name </th>
-                                <th  class='data-table'><?php echo"$date"; ?></th>
-                            </tr>
-                        
-                    
-                </td>
-    </tr>	  
 
-
-    <?php
-    
-    $id    = "";
-    $name   = "";
-    $attn="";
-    mysqli_select_db($db,'registration'); 
-        $sql = "SELECT * FROM student_database ORDER BY id ASC ";
-        $retval = mysqli_query($db , $sql );
-        if(! $retval )
-        {
-            die('Could not get data: ' . mysqli_error());
-         }
-         
-    echo"<form method='post'  class='input-group' action='index1.php'>";
-    
-                
-         $c=1;       
-        while($row = mysqli_fetch_array($retval, MYSQLI_ASSOC)) 
-        {
-            
-            echo"<tr>";
-            echo"<td  height='50' name='id' class='data-table' value=''>{$row['id']}</td>" ;         
-            echo "<td  height='50' name='name' class='data-table' value=''>{$row['name']}</td>" ;
-        
-            
-            
-            echo"<td height='50' >";
-            echo "<label class='container'>
-                    <input type='radio' name = '$c' value='P' >
+  	
+        <form method='post'  class='input-group' action='index1.php'>
+        <?php include('errors.php'); ?>
+            <label class='container'>
+                    <input type='radio' name = 'at' value='P' >
                             PRESENT
                          <span class='checkmark'></span>
-                  </label>" ;
-            echo "<label class='container' >
-                    <input type='radio' name = '$c' value='A'  >
+            </label>
+            <label class='container' >
+                    <input type='radio' name = 'at' value='A'  >
                                 ABSENT
                          <span class='checkmark'></span>
-                  </label>" ;
-            if (isset($_POST[$c])) {
-                $attnd=$_POST[$c];
-                $id1=$row['id'];
-                $name1=$row['name'];
-                
-                //$sub="INSERT INTO `$subject` (`subject`, `id`, `name`, `$date`) VALUES ('$subject', '$id1', '$name1', '$attnd');";
-                
-                $sub="UPDATE `$subject` SET `$date` = '$attnd' WHERE `$subject`.`id` = '$id1';";                                          
-                //mysqli_query($db,$fill);
-                mysqli_query($db,$sub);
-                
-            }
-             echo"</td>";
-             echo"</tr>";
-                      
-            
-             $c++;
-        }
-      
-     echo"</table>";
-     echo"<button type='submit' style='margin-top: 30px ' class='btn' >Submit</button> ";
-     echo"</form>";
-
-    ?>
-    
-    
-    
-    
-<p style='margin-top: 20px '> <a href="index2.php?logout='1'" style="color: red;">logout</a> </p>
-   
-</div>		
-</body>
-</html>
+            </label>   
+            <button type='submit' style='margin-top: 30px ' class='btn' name="att_user">Submit</button>
+        </form>
